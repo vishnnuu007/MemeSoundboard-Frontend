@@ -11,7 +11,7 @@ interface LoginResponse {
 })
 export class AuthService {
 
-  private apiUrl = 'https://localhost:7208/api/Auth';
+  private apiUrl = 'https://memesound.runasp.net/api/Auth';
   private tokenKey = 'admin_token';
 
   constructor(private http: HttpClient) { }
