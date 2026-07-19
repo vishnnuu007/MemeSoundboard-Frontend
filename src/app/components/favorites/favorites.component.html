@@ -1,0 +1,38 @@
+<div class="container mt-3 mt-md-4 pb-4">
+
+  <h2 class="page-heading">⭐ My Favorite Memes</h2>
+
+  <div class="row g-3">
+
+    <div
+      class="col-6 col-md-4"
+      [style.--i]="i"
+      *ngFor="let meme of favoriteMemes; let i = index">
+
+      <div class="card meme-card h-100 stagger-item">
+
+        <div class="meme-img-wrap">
+          <img [src]="'https://localhost:7208' + meme.imageUrl" class="meme-img" loading="lazy">
+        </div>
+
+        <div class="card-body meme-card-body">
+          <h5 class="meme-title">{{ meme.title }}</h5>
+          <p class="meme-desc">{{ meme.description }}</p>
+
+          <audio controls class="meme-audio">
+            <source [src]="'https://localhost:7208' + meme.audioUrl" type="audio/mpeg">
+          </audio>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="favoriteMemes.length==0" class="empty-state anim-fade-up">
+    <div class="empty-emoji">⭐</div>
+    <h4>No Favorite Memes Yet</h4>
+    <p class="text-muted-soft">Tap the star on any meme to save it here.</p>
+  </div>
+
+</div>

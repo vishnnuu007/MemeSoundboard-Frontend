@@ -1,0 +1,114 @@
+<div class="container mt-3 mt-md-4 pb-4">
+
+  <h1 class="page-heading mb-3">🛠 Admin Dashboard</h1>
+
+  <div class="row g-3 mb-3">
+
+    <div class="col-6 col-md-3">
+      <div class="card stat-card stat-primary shadow-sm">
+        <div class="card-body">
+          <h2>{{totalMemes}}</h2>
+          <p>Total Memes</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="card stat-card stat-success shadow-sm">
+        <div class="card-body">
+          <h2>{{totalCategories}}</h2>
+          <p>Categories</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="card stat-card stat-danger shadow-sm">
+        <div class="card-body">
+          <h2>{{totalLikes}}</h2>
+          <p>Total Likes</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="card stat-card stat-warning shadow-sm">
+        <div class="card-body">
+          <h2>{{totalPlays}}</h2>
+          <p>Total Plays</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="btn btn-success add-btn tap-scale mb-3" routerLink="/admin/add">
+    + Add Meme
+  </button>
+
+  <!-- Desktop table -->
+  <div class="table-responsive d-none d-md-block">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Category</th>
+          <th scope="col">Likes</th>
+          <th scope="col">Play Count</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let meme of memes">
+          <td>
+            <img [src]="'https://localhost:7208' + meme.imageUrl" width="80" height="80" class="img-thumbnail">
+          </td>
+          <td>{{ meme.title }}</td>
+          <td>{{ meme.categoryName }}</td>
+          <td>{{ meme.likes }}</td>
+          <td>{{ meme.playCount }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary me-2" [routerLink]="['/admin/edit', meme.id]">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteMeme(meme.id)">Delete</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="memes.length === 0">
+          <td colspan="6" class="text-center text-muted py-4">
+            No memes found. Click "+ Add Meme" to create one.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile card list -->
+  <div class="d-md-none">
+
+    <div
+      class="admin-meme-row stagger-item"
+      [style.--i]="i"
+      *ngFor="let meme of memes; let i = index">
+
+      <img [src]="'https://localhost:7208' + meme.imageUrl" class="admin-meme-thumb">
+
+      <div class="admin-meme-info">
+        <div class="admin-meme-title">{{ meme.title }}</div>
+        <div class="admin-meme-meta">{{ meme.categoryName }} &middot; ❤️ {{ meme.likes }} &middot; ▶ {{ meme.playCount }}</div>
+        <div class="admin-meme-actions">
+          <button class="btn btn-sm btn-primary tap-scale" [routerLink]="['/admin/edit', meme.id]">Edit</button>
+          <button class="btn btn-sm btn-danger tap-scale" (click)="deleteMeme(meme.id)">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="memes.length === 0" class="empty-state anim-fade-up">
+      <div class="empty-emoji">🎬</div>
+      <h4>No memes found</h4>
+      <p class="text-muted-soft">Tap "+ Add Meme" to create one.</p>
+    </div>
+
+  </div>
+
+</div>

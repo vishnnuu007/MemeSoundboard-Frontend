@@ -1,0 +1,11 @@
+.app-footer {
+  margin-top: 60px;
+  padding: 22px 0;
+  background: var(--bg-surface-2);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: .88rem;
+  text-align: center;
+}
+
+.footer-brand { color: var(--text-primary); font-family: 'Poppins', sans-serif; }

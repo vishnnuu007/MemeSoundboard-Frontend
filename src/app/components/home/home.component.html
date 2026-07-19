@@ -1,0 +1,178 @@
+<div class="container home-page">
+
+  <h1 class="page-title anim-fade-up">😂 Meme Soundboard</h1>
+
+  <!-- Sticky filter/search bar -->
+  <div class="filter-bar anim-fade-up">
+
+    <div class="scroll-x-clean category-chip-row">
+      <button
+        class="chip"
+        [class.chip-active]="selectedCategoryId==0"
+        (click)="filterCategory(0)">
+        All
+      </button>
+
+      <button
+        *ngFor="let category of categories"
+        class="chip"
+        [class.chip-active]="selectedCategoryId==category.id"
+        (click)="filterCategory(category.id)">
+        {{category.icon}} {{category.name}}
+      </button>
+    </div>
+
+    <div class="search-sort-row">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="Search memes..."
+          [(ngModel)]="searchText"
+          (input)="filterMemes()">
+      </div>
+
+      <select
+        class="form-select sort-select"
+        [(ngModel)]="sortOption"
+        (change)="sortMemes()">
+        <option value="default">Default</option>
+        <option value="likes">❤️ Most Liked</option>
+        <option value="plays">▶ Most Played</option>
+        <option value="az">A - Z</option>
+        <option value="za">Z - A</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- Surprise Me -->
+  <div class="text-center my-3 anim-fade-up">
+    <audio #randomPlayer></audio>
+    <button class="btn btn-warning btn-lg surprise-btn tap-scale" (click)="surpriseMe(randomPlayer)">
+      🎲 Surprise Me
+    </button>
+  </div>
+
+  <!-- Loading skeletons -->
+  <div class="row g-3 mb-4" *ngIf="loading">
+    <div class="col-6 col-md-4" *ngFor="let s of [1,2,3,4,5,6]">
+      <div class="skeleton-card">
+        <div class="skeleton" style="height:140px;border-radius:16px 16px 0 0;"></div>
+        <div class="skeleton mt-2" style="height:16px;width:70%;"></div>
+        <div class="skeleton mt-2" style="height:12px;width:50%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!loading">
+
+    <!-- Trending -->
+    <h2 class="section-title">🔥 Trending Memes</h2>
+
+    <div class="scroll-x-clean trending-row mb-4">
+      <div
+        class="trending-card stagger-item"
+        [style.--i]="i"
+        *ngFor="let meme of trendingMemes; let i = index">
+
+        <img [src]="'https://localhost:7208' + meme.imageUrl" class="trending-img" loading="lazy">
+
+        <div class="trending-body">
+          <h6 class="trending-title">{{ meme.title }}</h6>
+          <p class="trending-stats">▶ {{ meme.playCount }} &nbsp; ❤️ {{ meme.likes }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentRandomMeme" class="now-playing-banner anim-pop">
+      <span class="np-icon">🎵</span>
+      <div>
+        <div class="np-label">Now Playing</div>
+        <div class="np-title">{{ currentRandomMeme.title }}</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">{{ sectionTitle }}</h2>
+
+    <div class="row g-3 mb-4">
+      <div
+        class="col-6 col-md-4"
+        [style.--i]="i"
+        *ngFor="let meme of memes; let i = index">
+
+        <div class="card meme-card h-100 stagger-item">
+
+          <div class="meme-img-wrap">
+            <img [src]="'https://localhost:7208'+meme.imageUrl" class="meme-img" loading="lazy">
+          </div>
+
+          <div class="card-body meme-card-body">
+
+            <h5 class="meme-title">{{meme.title}}</h5>
+            <p class="meme-desc">{{meme.description}}</p>
+
+            <audio #player controls class="w-100 meme-audio">
+              <source [src]="'https://localhost:7208' + meme.audioUrl" type="audio/mpeg">
+            </audio>
+
+            <div class="meme-actions">
+              <button class="btn btn-success btn-action tap-scale" (click)="play(player, meme)">
+                ▶ Play
+              </button>
+
+              <button
+                class="btn btn-action tap-scale"
+                [class.btn-danger]="!isLiked(meme.id)"
+                [class.btn-success]="isLiked(meme.id)"
+                (click)="like(meme)">
+                {{ isLiked(meme.id) ? '❤️' : '🤍' }} {{ meme.likes }}
+              </button>
+
+              <button
+                class="btn btn-action tap-scale"
+                [class.btn-warning]="!isFavorite(meme.id)"
+                [class.btn-success]="isFavorite(meme.id)"
+                (click)="favorite(meme)">
+                {{ isFavorite(meme.id) ? '⭐' : '☆' }}
+              </button>
+
+            </div>
+
+            <p class="play-count-label">▶ Plays: {{meme.playCount}}</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="memes.length === 0" class="text-center empty-state anim-fade-up">
+      <div class="empty-emoji">🔍</div>
+      <h4>No memes found</h4>
+      <p class="text-muted-soft">Try a different search or category.</p>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-row" *ngIf="totalPages > 1">
+      <button class="btn btn-outline-primary page-btn tap-scale" (click)="previousPage()" [disabled]="currentPage==1">
+        ◀
+      </button>
+
+      <button
+        *ngFor="let page of pageNumbers"
+        class="btn page-btn tap-scale"
+        [class.btn-primary]="page==currentPage"
+        [class.btn-outline-primary]="page!=currentPage"
+        (click)="changePage(page)">
+        {{page}}
+      </button>
+
+      <button class="btn btn-outline-primary page-btn tap-scale" (click)="nextPage()" [disabled]="currentPage==totalPages">
+        ▶
+      </button>
+    </div>
+
+  </ng-container>
+
+</div>

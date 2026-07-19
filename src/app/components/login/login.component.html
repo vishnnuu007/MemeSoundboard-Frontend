@@ -1,0 +1,45 @@
+<div class="login-page">
+
+  <div class="card login-card shadow anim-fade-up">
+
+    <div class="login-header">
+      <div class="login-emoji">🔐</div>
+      <h3>Admin Login</h3>
+      <p class="text-muted-soft">Sign in to manage memes &amp; categories</p>
+    </div>
+
+    <div class="card-body">
+
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="username"
+          (keyup.enter)="login()"
+          placeholder="admin">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          [(ngModel)]="password"
+          (keyup.enter)="login()"
+          placeholder="••••••••">
+      </div>
+
+      <button
+        class="btn btn-success w-100 login-btn tap-scale"
+        [disabled]="loading"
+        (click)="login()">
+        {{ loading ? 'Signing in...' : 'Sign In' }}
+      </button>
+
+      <a routerLink="/" class="back-link">← Back to Home</a>
+
+    </div>
+  </div>
+
+</div>

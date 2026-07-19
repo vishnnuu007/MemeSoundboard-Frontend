@@ -1,0 +1,70 @@
+<!-- ============ TOP BAR ============ -->
+<nav class="app-topbar">
+  <div class="container d-flex align-items-center justify-content-between h-100">
+
+    <a class="brand" routerLink="/">
+      <span class="brand-emoji">😂</span>
+      <span class="brand-text d-none d-sm-inline">Meme Soundboard</span>
+      <span class="brand-text d-inline d-sm-none">Meme SB</span>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="d-none d-md-flex align-items-center gap-2">
+
+      <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}" class="btn btn-outline-light btn-sm-pill">Home</a>
+      <a routerLink="/favorites" routerLinkActive="active-link" class="btn btn-outline-light btn-sm-pill">⭐ Favorites</a>
+      <a routerLink="/recent" routerLinkActive="active-link" class="btn btn-outline-light btn-sm-pill">🕒 Recent</a>
+      <a routerLink="/categories" routerLinkActive="active-link" class="btn btn-outline-light btn-sm-pill">📂 Categories</a>
+      <a *ngIf="authService.isLoggedIn()" routerLink="/admin" routerLinkActive="active-link" class="btn btn-outline-light btn-sm-pill">🛠 Admin</a>
+
+      <button *ngIf="authService.isLoggedIn()" type="button" class="btn btn-sm-pill logout-btn tap-scale" (click)="logout()">
+        Logout
+      </button>
+
+      <button type="button" class="btn theme-toggle-btn tap-scale" (click)="toggleTheme()">
+        {{ themeService.isDark() ? '☀️' : '🌙' }}
+      </button>
+    </div>
+
+    <!-- Mobile: just theme toggle, nav lives in bottom tab bar -->
+    <div class="d-flex d-md-none align-items-center">
+      <button type="button" class="btn theme-toggle-btn tap-scale" (click)="toggleTheme()">
+        {{ themeService.isDark() ? '☀️' : '🌙' }}
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ============ PAGE CONTENT ============ -->
+<main class="app-content">
+  <div [@routeAnim]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
+</main>
+
+<app-footer class="d-none d-md-block"></app-footer>
+
+<!-- ============ MOBILE BOTTOM TAB BAR ============ -->
+<nav class="bottom-tab-bar d-md-none">
+  <a routerLink="/" routerLinkActive="tab-active" [routerLinkActiveOptions]="{exact:true}" class="tab-item">
+    <span class="tab-icon">🏠</span>
+    <span class="tab-label">Home</span>
+  </a>
+  <a routerLink="/categories" routerLinkActive="tab-active" class="tab-item">
+    <span class="tab-icon">📂</span>
+    <span class="tab-label">Categories</span>
+  </a>
+  <a routerLink="/favorites" routerLinkActive="tab-active" class="tab-item">
+    <span class="tab-icon">⭐</span>
+    <span class="tab-label">Favorites</span>
+  </a>
+  <a routerLink="/recent" routerLinkActive="tab-active" class="tab-item">
+    <span class="tab-icon">🕒</span>
+    <span class="tab-label">Recent</span>
+  </a>
+  <a routerLink="/admin" *ngIf="authService.isLoggedIn()" routerLinkActive="tab-active" class="tab-item">
+    <span class="tab-icon">🛠</span>
+    <span class="tab-label">Admin</span>
+  </a>
+</nav>

@@ -1,0 +1,43 @@
+.stat-card {
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+.stat-card h2 { color: #fff; font-weight: 800; margin-bottom: 2px; }
+.stat-card p { margin: 0; font-size: .82rem; opacity: .9; }
+
+.stat-primary { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+.stat-success { background: linear-gradient(135deg, #10b981, #34d399); }
+.stat-danger  { background: linear-gradient(135deg, #f43f5e, #fb7185); }
+.stat-warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #1f1533; }
+.stat-warning h2 { color: #1f1533; }
+
+.add-btn { border-radius: var(--radius-pill); }
+
+.admin-meme-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-meme-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex: 0 0 auto;
+}
+
+.admin-meme-info { flex: 1; min-width: 0; }
+.admin-meme-title { font-weight: 700; font-size: .92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-meme-meta { font-size: .74rem; color: var(--text-secondary); margin-bottom: 6px; }
+.admin-meme-actions { display: flex; gap: 6px; }

@@ -1,0 +1,82 @@
+<div class="container mt-3 mt-md-4 pb-5 form-page">
+
+  <div class="card form-card shadow anim-fade-up">
+
+    <div class="card-header form-card-header">
+      <h3 class="mb-0">{{ isEdit ? '✏️ Edit Meme' : '➕ Add Meme' }}</h3>
+    </div>
+
+    <div class="card-body">
+
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" [(ngModel)]="title" name="title">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" rows="3" [(ngModel)]="description" name="description"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select class="form-select" [(ngModel)]="categoryId" name="categoryId">
+          <option value="0">Select Category</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{category.icon}} {{category.name}}
+          </option>
+        </select>
+      </div>
+
+      <div *ngIf="isEdit && currentImageUrl" class="mb-3">
+        <label class="form-label">Current Image</label>
+        <br>
+        <img [src]="'https://localhost:7208' + currentImageUrl" width="140" class="img-thumbnail rounded-xl">
+      </div>
+
+      <div *ngIf="isEdit && currentAudioUrl" class="mb-3">
+        <label class="form-label">Current Audio</label>
+        <audio controls class="w-100">
+          <source [src]="'https://localhost:7208' + currentAudioUrl">
+        </audio>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Image</label>
+        <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)">
+      </div>
+
+      <div class="mt-2 mb-3" *ngIf="imagePreview">
+        <label class="fw-bold small text-muted-soft">Image Preview</label>
+        <br>
+        <img [src]="imagePreview" class="img-thumbnail rounded-xl mt-2" width="180">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Audio</label>
+        <input type="file" class="form-control" accept=".mp3" (change)="onAudioSelected($event)">
+      </div>
+
+      <div *ngIf="audioPreview" class="mt-2 mb-3">
+        <h6 class="small text-muted-soft">🎵 Audio Preview</h6>
+        <audio controls class="w-100">
+          <source [src]="audioPreview" type="audio/mpeg">
+        </audio>
+      </div>
+
+      <!-- Save button: inline on desktop -->
+      <button class="btn btn-success save-btn tap-scale d-none d-md-inline-block" (click)="saveMeme()">
+        Save Meme
+      </button>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Sticky save bar on mobile -->
+<div class="sticky-save-bar d-md-none">
+  <button class="btn btn-success w-100 save-btn tap-scale" (click)="saveMeme()">
+    {{ isEdit ? 'Update Meme' : 'Save Meme' }}
+  </button>
+</div>

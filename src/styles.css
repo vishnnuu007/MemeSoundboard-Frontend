@@ -1,0 +1,265 @@
+/* ==========================================================================
+   Meme Soundboard — Global Design System
+   Mobile-first, playful/vibrant theme with light + dark mode support.
+   ========================================================================== */
+
+:root {
+  /* Brand */
+  --brand-primary: #7c3aed;
+  --brand-primary-dark: #6425d0;
+  --brand-secondary: #f43f5e;
+  --brand-accent: #f59e0b;
+  --brand-success: #10b981;
+  --brand-gradient: linear-gradient(135deg, #7c3aed 0%, #f43f5e 100%);
+  --brand-gradient-soft: linear-gradient(135deg, rgba(124,58,237,.12) 0%, rgba(244,63,94,.12) 100%);
+
+  /* Surfaces (light mode) */
+  --bg-body: #f6f5fb;
+  --bg-surface: #ffffff;
+  --bg-surface-2: #f1eefb;
+  --text-primary: #1f1533;
+  --text-secondary: #6b6480;
+  --border-color: #eae6f7;
+
+  /* Shape / motion */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 2px 8px rgba(31, 21, 51, .06);
+  --shadow-md: 0 8px 24px rgba(31, 21, 51, .10);
+  --shadow-lg: 0 16px 40px rgba(31, 21, 51, .16);
+  --ease-snap: cubic-bezier(.34, 1.56, .64, 1);
+  --ease-smooth: cubic-bezier(.4, 0, .2, 1);
+  --dur-fast: .15s;
+  --dur-med: .3s;
+  --dur-slow: .5s;
+
+  /* Layout */
+  --nav-height: 60px;
+  --bottom-nav-height: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+body.dark-mode {
+  --bg-body: #121018;
+  --bg-surface: #1c1926;
+  --bg-surface-2: #262233;
+  --text-primary: #f2eefc;
+  --text-secondary: #a89fc2;
+  --border-color: #322c42;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, .3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, .4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, .5);
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-body);
+  color: var(--text-primary);
+  transition: background var(--dur-med) var(--ease-smooth), color var(--dur-med) var(--ease-smooth);
+  min-height: 100vh;
+  padding-bottom: calc(var(--bottom-nav-height) + var(--safe-bottom));
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', 'Inter', sans-serif;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Bootstrap overrides — reskin core components with the design system
+   ========================================================================== */
+
+.card {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: transform var(--dur-med) var(--ease-snap), box-shadow var(--dur-med) var(--ease-smooth), background var(--dur-med) var(--ease-smooth);
+}
+
+.shadow { box-shadow: var(--shadow-sm) !important; }
+
+.btn {
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  transition: transform var(--dur-fast) var(--ease-snap), box-shadow var(--dur-fast) var(--ease-smooth), background var(--dur-fast) var(--ease-smooth), opacity var(--dur-fast);
+}
+
+.btn:active { transform: scale(.94); }
+
+.btn-success, .btn-primary, .btn-warning, .btn-danger, .btn-info { border: none; }
+
+.btn-success { background: var(--brand-success); }
+.btn-primary { background: var(--brand-primary); }
+.btn-warning { background: var(--brand-accent); color: #1f1533; }
+.btn-danger { background: var(--brand-secondary); }
+.btn-info { background: #38bdf8; color: #05243a; }
+
+.btn-outline-primary { color: var(--brand-primary); border-color: var(--brand-primary); }
+.btn-outline-primary:hover { background: var(--brand-primary); }
+
+.form-control, .form-select {
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, .15);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.table { color: var(--text-primary); }
+.table > :not(caption) > * > * { background: var(--bg-surface); color: var(--text-primary); border-color: var(--border-color); }
+.table-dark, .table-dark > * { --bs-table-bg: var(--brand-primary); }
+
+/* ==========================================================================
+   Dark mode: fine-tune Bootstrap components beyond variables above
+   ========================================================================== */
+
+body.dark-mode .navbar { background: var(--bg-surface) !important; }
+body.dark-mode .img-thumbnail { background: var(--bg-surface-2); border-color: var(--border-color); }
+body.dark-mode .toast { background: var(--bg-surface); color: var(--text-primary); }
+
+/* ==========================================================================
+   Motion — shared keyframes & utility classes
+   ========================================================================== */
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(.85); }
+  70%  { opacity: 1; transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes pulseHeart {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.25); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.anim-fade-up { animation: fadeSlideUp var(--dur-med) var(--ease-smooth) both; }
+.anim-pop { animation: popIn var(--dur-med) var(--ease-snap) both; }
+
+/* Staggered entrance for lists of cards: combine with inline --i custom prop */
+.stagger-item {
+  animation: fadeSlideUp var(--dur-slow) var(--ease-smooth) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-surface-2) 25%, var(--border-color) 37%, var(--bg-surface-2) 63%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+.tap-scale:active { transform: scale(.96); }
+
+/* Hide scrollbar for horizontally-scrolling chip rows, keep it swipeable */
+.scroll-x-clean {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.scroll-x-clean::-webkit-scrollbar { display: none; }
+
+/* ==========================================================================
+   Small helpers used across components
+   ========================================================================== */
+
+.text-muted-soft { color: var(--text-secondary) !important; }
+.surface-2 { background: var(--bg-surface-2); }
+.rounded-xl { border-radius: var(--radius-lg) !important; }
+
+@media (min-width: 768px) {
+  body { padding-bottom: 0; }
+}
+
+/* ==========================================================================
+   Shared "meme card" pattern — used on Home, Favorites, Recently Played
+   ========================================================================== */
+
+.meme-card { overflow: hidden; }
+.meme-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.meme-img-wrap { overflow: hidden; }
+.meme-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-slow) var(--ease-smooth);
+}
+.meme-card:hover .meme-img { transform: scale(1.06); }
+.meme-card-body { padding: 12px; display: flex; flex-direction: column; }
+.meme-title {
+  font-size: .95rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.meme-desc {
+  font-size: .78rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 2.1em;
+}
+.meme-audio { margin-bottom: 10px; height: 34px; width: 100%; }
+.meme-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.btn-action { flex: 1 1 auto; min-width: 0; font-size: .75rem; padding: 6px 8px; white-space: nowrap; }
+.play-count-label { font-size: .72rem; color: var(--text-secondary); margin: 8px 0 0; }
+
+.empty-state { padding: 50px 0; text-align: center; }
+.empty-emoji { font-size: 3rem; margin-bottom: 8px; }
+
+.page-heading {
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin: 18px 0 16px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .meme-img { height: 200px; }
+  .btn-action { font-size: .85rem; padding: 8px 14px; }
+  .page-heading { font-size: 1.8rem; text-align: left; }
+}

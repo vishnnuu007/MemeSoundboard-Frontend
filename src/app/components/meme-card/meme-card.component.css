@@ -1,0 +1,12 @@
+.card {
+    max-width: 700px;
+    margin: auto;
+}
+
+.card-header h3 {
+    margin: 0;
+}
+
+button {
+    width: 100%;
+}

@@ -1,0 +1,43 @@
+<div class="container mt-3 mt-md-4 pb-5 form-page">
+
+  <div class="card form-card shadow anim-fade-up">
+
+    <div class="card-header form-card-header">
+      <h3 class="mb-0">{{ isEdit ? '✏️ Edit Category' : '➕ Add Category' }}</h3>
+    </div>
+
+    <div class="card-body">
+
+      <div class="mb-3">
+        <label class="form-label">Category Name</label>
+        <input type="text" class="form-control" [(ngModel)]="category.name">
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Icon (Emoji)</label>
+        <input type="text" class="form-control icon-input" [(ngModel)]="category.icon" placeholder="😂">
+      </div>
+
+      <div class="d-flex gap-2 flex-wrap d-none d-md-flex">
+        <button class="btn btn-success save-btn tap-scale" (click)="saveCategory()">
+          {{ isEdit ? 'Update' : 'Save' }}
+        </button>
+        <button class="btn btn-secondary save-btn tap-scale" routerLink="/categories">
+          Cancel
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Sticky action bar on mobile -->
+<div class="sticky-save-bar d-md-none d-flex gap-2">
+  <button class="btn btn-secondary save-btn tap-scale flex-fill" routerLink="/categories">
+    Cancel
+  </button>
+  <button class="btn btn-success save-btn tap-scale flex-fill" (click)="saveCategory()">
+    {{ isEdit ? 'Update' : 'Save' }}
+  </button>
+</div>
