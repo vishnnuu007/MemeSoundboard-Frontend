@@ -8,7 +8,7 @@ import { Category } from '../models/category';
 })
 export class CategoryService {
 
-  private apiUrl = 'https://localhost:7208/api/Category';
+private apiUrl = 'https://memesound.runasp.net/api/Category';
 
   constructor(private http: HttpClient) { }
 

@@ -8,7 +8,7 @@ import { Meme } from '../models/meme';
 })
 export class MemeService {
 
-  private apiUrl = 'https://localhost:7208/api/Meme';
+  private apiUrl = 'https://memesound.runasp.net/api/Meme';
 
   constructor(private http: HttpClient) { }
 
